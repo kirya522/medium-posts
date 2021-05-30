@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: minikube-demo
+  name: minikube-demo
+  labels:
+    app: minikube-demo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: web
+  selector:
+    app: minikube-demo
