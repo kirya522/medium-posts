@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minikube-demo
+  namespace: minikube-demo
+  labels:
+    app: minikube-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minikube-demo
+  template:
+    metadata:
+      labels:
+        app: minikube-demo
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: minikube-demo
+          image: ${DOCKER_IMAGE_NAME}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+              name: web
