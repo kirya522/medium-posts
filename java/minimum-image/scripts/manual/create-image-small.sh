@@ -1,7 +1,7 @@
 #!/bin/bash
 IMAGE_NAME=kirya522/small-image
 
-pushd ../
+pushd ../../
 
 mvn clean install -DskipTests=true
 
