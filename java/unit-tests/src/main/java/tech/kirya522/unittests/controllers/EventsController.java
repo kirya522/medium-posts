@@ -1,5 +1,6 @@
 package tech.kirya522.unittests.controllers;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.kirya522.unittests.dtos.event.EventDTO;
 import tech.kirya522.unittests.dtos.event.EventDTOBuilder;
@@ -24,7 +25,7 @@ public class EventsController {
     }
 
     @PutMapping
-    public void saveEvent(@RequestBody EventDTO eventDTO) {
+    public void saveEvent(@RequestBody @Validated EventDTO eventDTO) {
         final Event event = eventDTOBuilder.fromEventDTO(eventDTO);
         eventService.saveEvent(event);
     }
