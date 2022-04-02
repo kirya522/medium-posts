@@ -24,4 +24,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       working-directory: ./java/unit-tests/
-      run: mvn clean install
+      run: mvn clean install -DskipTests=true
+    - name: Run tests
+      working-directory: ./java/unit-tests/
+      run: mvn test
