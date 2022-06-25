@@ -10,16 +10,13 @@ import java.util.concurrent.CompletableFuture
 
 @RestController("/")
 class IntegrationController(
-    private val applicationEventPublisher: ApplicationEventPublisher,
-    private val weatherPoster: WeatherPoster
+    private val applicationEventPublisher: ApplicationEventPublisher, private val weatherPoster: WeatherPoster
 ) {
 
     @PutMapping("sendMessageViaEvent")
     fun sendMessageViaEvent(
         @RequestParam(
-            "msg",
-            required = false,
-            defaultValue = "Hi from integrations!"
+            "msg", required = false, defaultValue = "Hi from integrations!"
         ) msg: String
     ) {
         applicationEventPublisher.publishEvent(WeatherPosterEvent(this, msg))
@@ -27,10 +24,10 @@ class IntegrationController(
 
     @PutMapping("sendMessageAsTask")
     fun sendMessageAsTask(@RequestParam("msg", required = false, defaultValue = "Hi from integrations!") msg: String) {
-
+        weatherPoster.sendMessageAsync(msg)
     }
 
-    @PutMapping("sendMessageAsync")
+    @PutMapping("sendMessageAsFuture")
     fun sendMessageAsync(@RequestParam("msg", required = false, defaultValue = "Hi from integrations!") msg: String) {
         CompletableFuture.runAsync { weatherPoster.sendMessage(msg) }
     }
@@ -38,9 +35,7 @@ class IntegrationController(
     @PutMapping("/sendMessageViaDirectCall")
     fun sendMessageViaDirectCall(
         @RequestParam(
-            "msg",
-            required = false,
-            defaultValue = "Hi from integrations!"
+            "msg", required = false, defaultValue = "Hi from integrations!"
         ) msg: String
     ): Boolean {
         weatherPoster.sendMessage(msg)
