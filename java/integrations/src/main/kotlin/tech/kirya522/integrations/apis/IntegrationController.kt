@@ -16,26 +16,26 @@ class IntegrationController(
     @PutMapping("sendMessageViaEvent")
     fun sendMessageViaEvent(
         @RequestParam(
-            "msg", required = false, defaultValue = "Hi from integrations!"
+            "msg", required = false, defaultValue = "Hi from integrations via Event!"
         ) msg: String
     ) {
         applicationEventPublisher.publishEvent(WeatherPosterEvent(this, msg))
     }
 
     @PutMapping("sendMessageAsTask")
-    fun sendMessageAsTask(@RequestParam("msg", required = false, defaultValue = "Hi from integrations!") msg: String) {
+    fun sendMessageAsTask(@RequestParam("msg", required = false, defaultValue = "Hi from integrations via Task!") msg: String) {
         weatherPoster.sendMessageAsync(msg)
     }
 
     @PutMapping("sendMessageAsFuture")
-    fun sendMessageAsync(@RequestParam("msg", required = false, defaultValue = "Hi from integrations!") msg: String) {
+    fun sendMessageAsync(@RequestParam("msg", required = false, defaultValue = "Hi from integrations via Future!") msg: String) {
         CompletableFuture.runAsync { weatherPoster.sendMessage(msg) }
     }
 
     @PutMapping("/sendMessageViaDirectCall")
     fun sendMessageViaDirectCall(
         @RequestParam(
-            "msg", required = false, defaultValue = "Hi from integrations!"
+            "msg", required = false, defaultValue = "Hi from integrations via Direct call!"
         ) msg: String
     ): Boolean {
         weatherPoster.sendMessage(msg)
