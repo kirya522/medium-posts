@@ -9,22 +9,22 @@ import org.springframework.stereotype.Service;
 public class LogsPoster {
     private final static Logger LOGGER = LoggerFactory.getLogger(LogsPoster.class);
 
-    @Scheduled(fixedRate=1000)
+    @Scheduled(fixedRate=100)
     public void postTrace(){
         LOGGER.trace("Trace message");
     }
 
-    @Scheduled(fixedRate=1000)
+    @Scheduled(fixedRate=200)
     public void postDebug(){
         LOGGER.debug("Debug message");
     }
 
-    @Scheduled(fixedRate=1000)
+    @Scheduled(fixedRate=300)
     public void postInfo(){
         LOGGER.info("Info message");
     }
 
-    @Scheduled(fixedRate=1000)
+    @Scheduled(fixedRate=500)
     public void postWarn(){
         LOGGER.warn("Warn message");
     }
