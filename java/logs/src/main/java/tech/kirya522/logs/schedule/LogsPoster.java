@@ -33,4 +33,9 @@ public class LogsPoster {
     public void postError(){
         LOGGER.error("Error message");
     }
+
+    @Scheduled(fixedRate=1000)
+    public void postException(){
+        throw new RuntimeException("Exception");
+    }
 }
