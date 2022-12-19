@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AdvancedLoggingApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="tech.kirya522.advancedlogging.AdvancedLoggingApplication" />
+    <module name="advanced-logging" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="tech.kirya522.advancedlogging.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
