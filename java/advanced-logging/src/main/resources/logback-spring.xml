@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <property name="LOG_ROOT" value="c:/temp/logs" />
+    <property name="LOG_FILE_NAME" value="application" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
@@ -10,8 +13,31 @@
         <minimumEventLevel>WARN</minimumEventLevel>
     </appender>
 
+    <appender name="JsonRollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_ROOT}/${LOG_FILE_NAME}.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <thread>[ignore]</thread>
+                <version>[ignore]</version>
+                <stackTrace>exception</stackTrace>
+            </fieldNames>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_ROOT}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <!-- keep 30 days' worth of history capped at 3GB total size -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="SENTRY" />
+        <appender-ref ref="JsonRollingFile" />
     </root>
 </configuration>
