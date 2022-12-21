@@ -1,0 +1,10 @@
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 8
+
+sentry:
+  dsn: 'https://127730f2c6634befadd7d76b0fcaca73@o4504356687380480.ingest.sentry.io/4504356690460672'
+  logging:
+    enabled: false
