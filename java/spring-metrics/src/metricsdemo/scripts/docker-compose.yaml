@@ -21,6 +21,8 @@ services:
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       monitoring:
         aliases:
