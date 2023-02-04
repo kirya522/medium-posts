@@ -2,7 +2,7 @@
   <configuration default="false" name="Epsilon GC" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="Main" />
     <module name="gc-tests" />
-    <option name="PROGRAM_PARAMETERS" value="-XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC -Xmx128mb" />
+    <option name="PROGRAM_PARAMETERS" value="-Xms8m -Xmx64m -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
