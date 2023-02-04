@@ -1,7 +1,7 @@
 # Minikube demo application, manifests, scripts
 All the required scripts are located in __scripts__ folder
 
-##__Requirements:__
+## __Requirements:__
 1. To run application install: docker, minikube
 2. Maven && Java 11
 3. Build docker image with maven
