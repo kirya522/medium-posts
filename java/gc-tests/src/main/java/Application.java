@@ -16,7 +16,7 @@ public class Application implements Runnable {
     @Override
     public void run() {
         // pusher
-        generatePushers(4);
+        generatePushers(pushersNumber);
 
         // consumer
         new Thread(() -> {

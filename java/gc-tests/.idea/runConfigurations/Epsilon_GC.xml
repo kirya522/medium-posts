@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Epsilon GC" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="Main" />
+    <module name="gc-tests" />
+    <option name="PROGRAM_PARAMETERS" value="-XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC -Xmx128mb" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
