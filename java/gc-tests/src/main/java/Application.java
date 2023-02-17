@@ -17,14 +17,11 @@ public class Application implements Runnable {
     @Override
     public void run() {
         // pusher
-        generatePushers(processors * 3);
+        generatePushers(processors);
 
         // consumer
         generatePullers(processors);
 
-        while (true){
-
-        }
     }
 
     private void generatePushers(int number) {
@@ -33,12 +30,12 @@ public class Application implements Runnable {
             int finalI = i;
             threads.add(new Thread(() -> {
                 for (int j = 0; j < numberOfOperations / number; j++) {
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    queue.add(new Data((long) j * finalI + j, finalI, "Name_" + j, "Comment_" + j));
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+                    queue.offer(new Data((long) j * finalI + j, finalI, "Name_" + j, "Comment_" + j));
                 }
                 System.out.println("Pusher " + finalI + " finished");
             }, "pusher_" + i));
@@ -50,6 +47,11 @@ public class Application implements Runnable {
         for (int i = 0; i < number; i++) {
             new Thread(() -> {
                 while (true) {
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
                     Data poll = queue.poll();
                     if (poll != null){
                         System.out.println(poll);
