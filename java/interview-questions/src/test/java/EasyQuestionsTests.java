@@ -113,14 +113,14 @@ public class EasyQuestionsTests {
         //Map<Integer, Integer> enumMap = new EnumMap<>();
     }
 
-    @Test
-    public void checkedException_Demo() {
-
+    @Test()
+    public void checkedException_Demo() throws InterruptedException {
+        throw new InterruptedException();
     }
 
     @Test
     public void unCheckedException_Demo() {
-
+        throw new RuntimeException();
     }
 
     @Test
