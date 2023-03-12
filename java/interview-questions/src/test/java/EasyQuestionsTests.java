@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class EasyQuestionsTests {
 
@@ -133,7 +135,7 @@ public class EasyQuestionsTests {
 
         String name = null;
         Assertions.assertEquals(Optional.empty(), Optional.of(new BadHashDistribution(name)).map(v -> v.getName()));
-        Assertions.assertThrows(NullPointerException.class,() -> Optional.of(name).orElseGet(()->"default"));
+        Assertions.assertThrows(NullPointerException.class, () -> Optional.of(name).orElseGet(() -> "default"));
     }
 
     @Test
@@ -141,7 +143,7 @@ public class EasyQuestionsTests {
         Assertions.assertEquals(Optional.empty(), Optional.ofNullable(null));
 
         String name = null;
-        Assertions.assertDoesNotThrow(() -> Optional.ofNullable(name).orElseGet(()->"default"));
+        Assertions.assertDoesNotThrow(() -> Optional.ofNullable(name).orElseGet(() -> "default"));
     }
 
     /**
@@ -229,12 +231,21 @@ public class EasyQuestionsTests {
 
     @Test
     public void streams_Demo() {
-
+        List<Integer> values = List.of(1, 1, 2, 3, 4, 4, 5, 6);
+        Assertions.assertIterableEquals(List.of(2, 4, 6, 8, 10, 12),
+                values.stream().distinct().map(v -> v * 2).collect(Collectors.toList()));
+        Assertions.assertEquals(6, values.stream().max(Integer::compareTo).get());
+        Assertions.assertEquals(1, values.stream().min(Integer::compareTo).get());
     }
 
     @Test
     public void primitiveStreams_Demo() {
-
+        Assertions.assertEquals(45, IntStream.range(1, 10).sum());
+        Assertions.assertIterableEquals(List.of(1, 3, 5, 7, 9),
+                IntStream.rangeClosed(1, 10)
+                        .filter(i -> i % 2 != 0)
+                        .boxed()
+                        .collect(Collectors.toList()));
     }
 
     @Test
@@ -244,7 +255,7 @@ public class EasyQuestionsTests {
             public Integer get() {
                 try {
                     return 1;
-                } catch (Exception ignored){
+                } catch (Exception ignored) {
                     return 2;
                 } finally {
                     return 3;
@@ -259,7 +270,7 @@ public class EasyQuestionsTests {
             public Integer get() {
                 try {
                     throw new RuntimeException();
-                } catch (Exception ignored){
+                } catch (Exception ignored) {
                     return 2;
                 } finally {
                     return 3;
