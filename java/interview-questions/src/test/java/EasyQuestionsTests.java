@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EasyQuestionsTests {
 
     @Test
@@ -39,7 +42,35 @@ public class EasyQuestionsTests {
 
     @Test
     public void hashMapEqualsHashCode_Demo() {
+        // regular map
+        Map<Long, Long> map = new HashMap<>();
+        map.put(1L, 1L);
+        Long val = map.get(1L);
+        Assertions.assertEquals(1L, val);
 
+        // map with key is mutable object
+        Map<Map<Long, Long>, Long> multiMapMap = new HashMap<>();
+        multiMapMap.put(map, 2L);
+
+        // build new object to get value => works
+        Map<Long, Long> mapKey = new HashMap<>();
+        mapKey.put(1L, 1L);
+        Long objectValue = multiMapMap.get(mapKey);
+        Assertions.assertEquals(2L, objectValue);
+
+        // mutate initial map and try to get => not working
+        map.put(2L, 1L);
+        Long mutable = multiMapMap.get(map);
+        Assertions.assertNotEquals(2L, mutable);
+
+        // try again with same object key => not working
+        Long tryAgain = multiMapMap.get(mapKey);
+        Assertions.assertNotEquals(2L, tryAgain);
+
+        // try again with modified object key => not working
+        mapKey.put(2L, 1L);
+        Long tryAgainMutated = multiMapMap.get(mapKey);
+        Assertions.assertNotEquals(2L, tryAgainMutated);
     }
 
     @Test
