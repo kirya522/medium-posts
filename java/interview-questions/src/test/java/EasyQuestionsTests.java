@@ -1,15 +1,40 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 public class EasyQuestionsTests {
 
     @Test
     public void primitivesByValue_Demo() {
+        int first = 1;
+        int second = 1;
 
+        // ==
+        Assert.assertSame(first, second);
+        // equals
+        Assert.assertEquals(first, second);
     }
 
+    @SuppressWarnings("removal")
     @Test
     public void objectsByValue_Demo() {
+        // jvm hack for caching small values
+        // https://wiki.owasp.org/index.php/Java_gotchas#Immutable_Objects_.2F_Wrapper_Class_Caching
+        Integer first = 1;
+        Integer second = 1;
 
+        Assert.assertSame(first, second);
+        Assert.assertEquals(first, second);
+
+        // extended example
+        first = 1337;
+        second = 1337;
+        Assert.assertNotSame(first, second);
+        Assert.assertEquals(first, second);
+
+        // typical question
+        Assert.assertNotSame(new Boolean(false), Boolean.FALSE);
+        Assert.assertEquals(false, Boolean.FALSE);
+        Assert.assertSame(false, Boolean.FALSE);
     }
 
     @Test
