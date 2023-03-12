@@ -1,4 +1,4 @@
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class EasyQuestionsTests {
@@ -9,9 +9,9 @@ public class EasyQuestionsTests {
         int second = 1;
 
         // ==
-        Assert.assertSame(first, second);
+        Assertions.assertSame(first, second);
         // equals
-        Assert.assertEquals(first, second);
+        Assertions.assertEquals(first, second);
     }
 
     @SuppressWarnings("removal")
@@ -22,19 +22,19 @@ public class EasyQuestionsTests {
         Integer first = 1;
         Integer second = 1;
 
-        Assert.assertSame(first, second);
-        Assert.assertEquals(first, second);
+        Assertions.assertSame(first, second);
+        Assertions.assertEquals(first, second);
 
         // extended example
         first = 1337;
         second = 1337;
-        Assert.assertNotSame(first, second);
-        Assert.assertEquals(first, second);
+        Assertions.assertNotSame(first, second);
+        Assertions.assertEquals(first, second);
 
         // typical question
-        Assert.assertNotSame(new Boolean(false), Boolean.FALSE);
-        Assert.assertEquals(false, Boolean.FALSE);
-        Assert.assertSame(false, Boolean.FALSE);
+        Assertions.assertNotSame(new Boolean(false), Boolean.FALSE);
+        Assertions.assertEquals(false, Boolean.FALSE);
+        Assertions.assertSame(false, Boolean.FALSE);
     }
 
     @Test
