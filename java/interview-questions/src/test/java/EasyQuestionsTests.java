@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import testclasses.BadHashDistribution;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class EasyQuestionsTests {
 
@@ -75,12 +75,42 @@ public class EasyQuestionsTests {
 
     @Test
     public void hashMapBadDistribution_Demo() {
+        var map = new HashMap<BadHashDistribution, Integer>();
+        for (int i = 1; i < 8; i++) {
+            map.put(new BadHashDistribution(String.valueOf(i)), i);
+        }
+        Integer val = map.get(new BadHashDistribution(String.valueOf(7)));
 
+        Assertions.assertEquals(7, val);
     }
 
+    /**
+     * Read more: https://www.baeldung.com/java-collections
+     */
     @Test
     public void collectionFramework_Demo() {
+        // iterable -> collection -> list, queue, set
+        // map not in collections
 
+        List<Integer> arrayList = new ArrayList<>();
+        List<Integer> linkedList = new LinkedList<>();
+        List<Integer> vector = new Vector<>();
+        List<Integer> stack = new Stack<>();
+
+        Queue<Integer> priorityQueue = new PriorityQueue<>();
+        Queue<Integer> linkedListQueue = new LinkedList<>();
+        Queue<Integer> arrayListQueue = new ArrayDeque<>();
+
+        Set<Integer> hashSet = new HashSet<>();
+        Set<Integer> linkedHashSet = new LinkedHashSet<>();
+        Set<Integer> treeSet = new TreeSet<>();
+
+        // map is not in collections
+        Map<Integer, Integer> hashMap = new HashMap<>();
+        Map<Integer, Integer> linkedHashMap = new LinkedHashMap<>();
+        Map<Integer, Integer> treeMap = new TreeMap<>();
+        // specific map for enum values
+        //Map<Integer, Integer> enumMap = new EnumMap<>();
     }
 
     @Test
@@ -95,12 +125,19 @@ public class EasyQuestionsTests {
 
     @Test
     public void optionalOf_Demo() {
+        Assertions.assertThrows(NullPointerException.class, () -> Optional.of(null));
 
+        String name = null;
+        Assertions.assertEquals(Optional.empty(), Optional.of(new BadHashDistribution(name)).map(v -> v.getName()));
+        Assertions.assertThrows(NullPointerException.class,() -> Optional.of(name).orElseGet(()->"default"));
     }
 
     @Test
     public void optionalOfNullable_Demo() {
+        Assertions.assertEquals(Optional.empty(), Optional.ofNullable(null));
 
+        String name = null;
+        Assertions.assertDoesNotThrow(() -> Optional.ofNullable(name).orElseGet(()->"default"));
     }
 
     /**
