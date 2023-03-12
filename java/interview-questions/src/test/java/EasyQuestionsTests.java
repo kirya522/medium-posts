@@ -2,7 +2,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import testclasses.BadHashDistribution;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class EasyQuestionsTests {
 
@@ -234,12 +238,66 @@ public class EasyQuestionsTests {
     }
 
     @Test
-    public void tryCatchFinally_Demo() {
+    public void tryCatchFinallyReturn_Demo() {
+        Supplier<Integer> integerSupplier = new Supplier<Integer>() {
+            @Override
+            public Integer get() {
+                try {
+                    return 1;
+                } catch (Exception ignored){
+                    return 2;
+                } finally {
+                    return 3;
+                }
+            }
+        };
+        Assertions.assertNotEquals(1, integerSupplier.get());
+        Assertions.assertEquals(3, integerSupplier.get());
 
+        Supplier<Integer> integerSupplierWithException = new Supplier<Integer>() {
+            @Override
+            public Integer get() {
+                try {
+                    throw new RuntimeException();
+                } catch (Exception ignored){
+                    return 2;
+                } finally {
+                    return 3;
+                }
+            }
+        };
+
+        Assertions.assertNotEquals(2, integerSupplierWithException.get());
+        Assertions.assertEquals(3, integerSupplierWithException.get());
+    }
+
+    /**
+     * Read more: https://recepinanc.medium.com/til-18-prefer-try-with-resources-to-try-catch-finally-afc8c0dc9c05
+     */
+    @Test
+    public void tryCatchFinallyResource_Demo() throws URISyntaxException, FileNotFoundException {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(getClass().getClassLoader().getResource("test.txt").toURI()));
+            while (scanner.hasNext()) {
+                System.out.println(scanner.nextLine());
+                throw new RuntimeException("Something happened on reading");
+            }
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
     }
 
     @Test
-    public void tryWithResource_Demo() {
-
+    public void tryWithResource_Demo() throws URISyntaxException {
+        try (Scanner scanner = new Scanner(new File(getClass().getClassLoader().getResource("test.txt").toURI()))) {
+            while (scanner.hasNext()) {
+                System.out.println(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
