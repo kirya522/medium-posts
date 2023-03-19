@@ -1,4 +1,4 @@
-package testclasses;
+package easy.testclasses;
 
 import java.util.Objects;
 
