@@ -1,6 +1,8 @@
+package easy.tests;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import testclasses.BadHashDistribution;
+import easy.testclasses.BadHashDistribution;
 
 import java.io.File;
 import java.io.FileNotFoundException;
