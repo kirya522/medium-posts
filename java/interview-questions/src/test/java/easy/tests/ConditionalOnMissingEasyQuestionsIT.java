@@ -16,7 +16,7 @@ public class ConditionalOnMissingEasyQuestionsIT {
     @Autowired
     private BadHashDistribution bean;
 
-    @Value("my.custom.value")
+    @Value("${my.custom.value}")
     private String value;
 
     @Test

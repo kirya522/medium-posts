@@ -299,6 +299,7 @@ public class EasyQuestionsTests {
         } finally {
             if (scanner != null) {
                 scanner.close();
+                throw new RuntimeException("Something happened on closing");
             }
         }
     }
