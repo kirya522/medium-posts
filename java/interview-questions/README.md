@@ -13,7 +13,7 @@ Topics
 - Streams
 - Try-catch-finally
 
-[source](test/java/easy)
+[source](src/test/java/easy)
 
 [video](https://youtu.be/CVGmIp9Wv68)
 
@@ -32,10 +32,10 @@ Topics
 - SQL tricks
 - Java networking (io, nio)
 
-[source](test/java/medium)
+[source](src/test/java/medium)
 
 ---
 
 ## Hard
 
-[source](test/java/hard)
+[source](src/test/java/hard)
