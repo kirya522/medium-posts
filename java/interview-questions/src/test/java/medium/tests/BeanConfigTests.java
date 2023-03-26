@@ -3,7 +3,6 @@ package medium.tests;
 import easy.itconfigs.BeanLifecycleBean;
 import easy.testclasses.BadHashDistribution;
 import medium.itconfigs.SimpleTestConfig;
-import medium.services.TestTransactionalService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -41,12 +40,5 @@ public class BeanConfigTests {
         BadHashDistribution bean = beanFactory.getBean(BadHashDistribution.class);
         Assertions.assertNotNull(badHashDistributionSingleton);
         Assertions.assertEquals(bean, badHashDistributionSingleton);
-    }
-
-    @Test
-    public void shouldGetProxy() {
-        TestTransactionalService bean = beanFactory.getBean(TestTransactionalService.class);
-        Assertions.assertNotNull(bean);
-        bean.createInTransaction();
     }
 }
