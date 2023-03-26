@@ -20,7 +20,7 @@ Topics
 ---
 
 ## Medium
-Topics
+Part 1:
 - Spring core (beans lifecycle, configs, proxies)
 - Tricks with transactions
 - Events
@@ -29,6 +29,8 @@ Topics
 - Concurrency
 - Volatile
 - Happens before
+
+Part 2:
 - SQL tricks
 - Java networking (io, nio)
 
