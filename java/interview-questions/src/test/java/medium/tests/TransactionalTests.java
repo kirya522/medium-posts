@@ -1,8 +1,5 @@
 package medium.tests;
 
-import easy.itconfigs.BeanLifecycleBean;
-import easy.testclasses.BadHashDistribution;
-import medium.itconfigs.SimpleTestConfig;
 import medium.itconfigs.TransactionalTestConfig;
 import medium.services.TestTransactionalService;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +15,7 @@ public class TransactionalTests {
 
     @Autowired
     private BeanFactory beanFactory;
+
     @Test
     public void shouldGetProxy() {
         TestTransactionalService bean = beanFactory.getBean(TestTransactionalService.class);
