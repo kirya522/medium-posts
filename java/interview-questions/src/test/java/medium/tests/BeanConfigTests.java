@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+/**
+ * https://www.baeldung.com/spring-bean
+ * https://www.baeldung.com/spring-application-context
+ * https://www.baeldung.com/spring-beanfactory
+ * https://www.baeldung.com/spring-annotations-resource-inject-autowire
+ */
 @ContextConfiguration(classes = SimpleTestConfig.class)
 @SpringBootTest
 public class BeanConfigTests {
