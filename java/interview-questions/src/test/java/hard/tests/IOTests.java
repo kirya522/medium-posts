@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 /**
  * IO tests
  */
-public class HardTests {
+public class IOTests {
 
     @Test
     public void blockingIoRead() {
