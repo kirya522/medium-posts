@@ -2,7 +2,7 @@ package hard.tests;
 
 import org.junit.jupiter.api.Test;
 
-public class LocksTests {
+public class DeadLocksTests {
     @Test
     public void nestedLocksDeadLock() {
 
