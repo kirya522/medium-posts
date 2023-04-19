@@ -66,29 +66,4 @@ public class IOTests {
 
         Files.delete(filePath);
     }
-
-    @Test
-    public void basicHttpClient() {
-
-    }
-
-    @Test
-    public void monitorHttpClient() {
-        // request + response
-    }
-
-    @Test
-    public void keepAliveHttpClient() {
-
-    }
-
-    @Test
-    public void restTemplateExample() {
-
-    }
-
-    @Test
-    public void webClientExample() {
-
-    }
 }
