@@ -15,6 +15,10 @@ import java.nio.file.StandardOpenOption;
 
 /**
  * IO tests
+ * https://jenkov.com/tutorials/java-io/index.html
+ * https://www.javatpoint.com/java-io
+ * https://www.tutorialspoint.com/java/java_files_io.htm
+ * https://www.baeldung.com/java-io-vs-nio
  */
 public class IOTests {
 
@@ -43,6 +47,9 @@ public class IOTests {
         Files.delete(Path.of(FILE_NAME));
     }
 
+    /**
+     * https://jenkov.com/tutorials/java-nio/index.html
+     */
     @Test
     public void nioWriteAndRead() throws IOException {
         Path filePath = Paths.get(FILE_NAME);
