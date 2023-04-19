@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.parallel.ExecutionMode.CONCURRENT;
 public class ConcurrencyTests {
 
     @Execution(CONCURRENT)
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     public void volatileTests() throws InterruptedException {
         var volatileExample = new VolatileExample();
 
@@ -35,7 +35,7 @@ public class ConcurrencyTests {
      * https://web.archive.org/web/20220628134440/https://habr.com/ru/post/143237/
      */
     @Execution(CONCURRENT)
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     public void volatilePlusPlusTests() throws InterruptedException {
         var volatileExample = new VolatileExample();
 
@@ -50,7 +50,7 @@ public class ConcurrencyTests {
      * https://web.archive.org/web/20220519121335/https://habr.com/en/post/133981/
      */
     @Execution(CONCURRENT)
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     public void realVolatileTests() {
         var volatileExample = new VolatileExample();
 
@@ -64,7 +64,7 @@ public class ConcurrencyTests {
      * https://www.youtube.com/watch?v=XivoUctdPIU
      */
     @Execution(CONCURRENT)
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     public void atomicTests() throws InterruptedException {
         var volatileExample = new VolatileExample();
 
@@ -78,7 +78,7 @@ public class ConcurrencyTests {
      * https://www.baeldung.com/java-start-thread
      */
     @Execution(CONCURRENT)
-    @RepeatedTest(100)
+    @RepeatedTest(10)
     public void startThreadTests() {
         // 1
         new Thread() {

@@ -4,6 +4,7 @@ import hard.classes.DeadlockExample;
 import hard.classes.NestedLocksExample;
 import hard.classes.TryLockExample;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 /**
  * https://www.baeldung.com/java-deadlock-livelock
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
  * https://www.digitalocean.com/community/tutorials/deadlock-in-java-example
  */
 public class DeadLocksTests {
+
+    @Timeout(5)
     @Test
     public void nestedLocksDeadLock() throws InterruptedException {
         DeadlockExample deadlockExample = new DeadlockExample();
@@ -18,6 +21,7 @@ public class DeadLocksTests {
         deadlockExample.synchronizedDeadLock();
     }
 
+    @Timeout(5)
     @Test
     public void cyclicBarrier() throws InterruptedException {
         DeadlockExample deadlockExample = new DeadlockExample();
