@@ -2,7 +2,6 @@ package easy.tests;
 
 
 import easy.itconfigs.BeanLifecycleBean;
-import easy.itconfigs.ConditionalOnBeanTestConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
