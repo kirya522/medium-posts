@@ -57,6 +57,11 @@ public class HttpTests {
         }
     }
 
+    /**
+     * https://www.baeldung.com/rest-template
+     * https://docs.spring.io/spring-android/docs/current/reference/html/rest-template.html
+     * https://www.digitalocean.com/community/tutorials/spring-resttemplate-example
+     */
     @Test
     public void restTemplateExample() {
         RestTemplate restTemplate = new RestTemplate();
@@ -75,11 +80,19 @@ public class HttpTests {
         System.out.println(response.getBody());
     }
 
+    /**
+     * https://www.baeldung.com/spring-resttemplate-logging
+     * https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.http-clients
+     */
     @Test
     public void monitorHttpClient() {
         // request + response
     }
 
+    /**
+     * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive
+     * https://medium.com/@yannic.luyckx/resttemplate-and-connection-pool-617ebd924f68
+     */
     @Test
     public void keepAliveHttpClient() {
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
