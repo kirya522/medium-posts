@@ -1,9 +1,11 @@
 package hard.tests;
 
 import hard.classes.AtomicIntegerExample;
+import hard.classes.ReadWriteLockExample;
 import hard.classes.ReentrantLockExample;
 import hard.classes.SynchronizedExample;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,17 @@ public class ConcurrencyTests {
         numbers.parallelStream()
                 .filter(n -> n % 2 == 0)
                 .map(n -> n * n)
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void parallelUndefinedBehaviour() {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        numbers.parallelStream()
+                .filter(n -> n % 2 == 0)
+                // potentially failed call
+                .map(n -> new RestTemplate().getForObject("https://google.com", String.class))
                 .forEach(System.out::println);
     }
 
@@ -49,12 +62,14 @@ public class ConcurrencyTests {
      * https://www.geeksforgeeks.org/lock-framework-vs-thread-synchronization-in-java/
      * https://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
      * https://www.baeldung.com/java-concurrent-locks
+     * https://jenkov.com/tutorials/java-concurrency/read-write-locks.html
      */
     @Test
     public void synchronizedVsLocksTest() {
         ReentrantLockExample lockExample = new ReentrantLockExample();
         SynchronizedExample synchronizedExample = new SynchronizedExample();
         AtomicIntegerExample atomicIntegerExample = new AtomicIntegerExample();
+        ReadWriteLockExample readWriteLockExample = new ReadWriteLockExample();
 
         ForkJoinPool customThreadPool = new ForkJoinPool(4);
 
@@ -66,9 +81,21 @@ public class ConcurrencyTests {
                 System.out.println("synchronized =" + synchronizedExample.getCount());
                 atomicIntegerExample.increment();
                 System.out.println("atomic =" + atomicIntegerExample.getCount());
+                readWriteLockExample.increment();
+                System.out.println("readWrite =" + readWriteLockExample.getCount());
             });
         }
 
         customThreadPool.shutdown();
+    }
+
+    @Test
+    public void happensBeforeForFinal() {
+
+    }
+
+    @Test
+    public void happensBeforeForVolatile() {
+
     }
 }

@@ -16,6 +16,7 @@ public class DeadLocksTests {
     @Timeout(5)
     @Test
     public void nestedLocksDeadLock() throws InterruptedException {
+        // Collect thread dump
         DeadlockExample deadlockExample = new DeadlockExample();
 
         deadlockExample.synchronizedDeadLock();
