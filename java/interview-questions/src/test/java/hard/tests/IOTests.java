@@ -19,6 +19,7 @@ import java.nio.file.StandardOpenOption;
  * https://www.javatpoint.com/java-io
  * https://www.tutorialspoint.com/java/java_files_io.htm
  * https://www.baeldung.com/java-io-vs-nio
+ * https://itsobes.ru/JavaSobes/chem-otlichaetsia-blokiruiushchee-chtenie-ot-neblokiruiushchego/
  */
 public class IOTests {
 
