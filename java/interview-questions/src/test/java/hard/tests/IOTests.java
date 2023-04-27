@@ -29,15 +29,20 @@ public class IOTests {
     public void blockingIoWriteAndRead() throws IOException {
         String text = "Hello, World!";
 
+        // write
         try (FileOutputStream fos = new FileOutputStream(FILE_NAME)) {
             byte[] bytes = text.getBytes();
+            // wait
             fos.write(bytes);
             System.out.println("File has been written.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // read
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
+            // wait
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
@@ -55,8 +60,9 @@ public class IOTests {
     public void nioWriteAndRead() throws IOException {
         Path filePath = Paths.get(FILE_NAME);
         String text = "Hello, World!";
-        ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
 
+        // write
+        ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
         try (FileChannel fileChannel = FileChannel.open(filePath, StandardOpenOption.WRITE, StandardOpenOption.CREATE)) {
             while (buffer.hasRemaining()) {
                 fileChannel.write(buffer);
@@ -65,6 +71,8 @@ public class IOTests {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // read
         try {
             String content = Files.readString(filePath);
             System.out.println(content);

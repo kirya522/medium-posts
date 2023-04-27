@@ -1,10 +1,10 @@
 package hard.tests;
 
-import hard.classes.AtomicIntegerExample;
-import hard.classes.ReadWriteLockExample;
-import hard.classes.ReentrantLockExample;
-import hard.classes.SynchronizedExample;
+import hard.classes.*;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -89,13 +89,20 @@ public class ConcurrencyTests {
         customThreadPool.shutdown();
     }
 
-    @Test
-    public void happensBeforeForFinal() {
+    @RepeatedTest(100)
+    @Execution(ExecutionMode.CONCURRENT)
+    public void happensBeforeForFinal() throws InterruptedException {
+        final HappensBeforeAndFinalTest[] var = {null};
+        Thread checkThread = new Thread(() -> {
+            if (var[0] != null) {
+                assert var[0].nonFinalVar == 1;
+                assert var[0].finalVar == 1;
+            }
+        });
+        checkThread.start();
 
-    }
+        new Thread(() -> var[0] = new HappensBeforeAndFinalTest(1, 1)).start();
 
-    @Test
-    public void happensBeforeForVolatile() {
-
+        checkThread.join();
     }
 }
