@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Timeout;
  * https://www.baeldung.com/java-deadlock-livelock
  * https://www.javatpoint.com/deadlock-in-java
  * https://www.digitalocean.com/community/tutorials/deadlock-in-java-example
+ * https://www.baeldung.com/java-thread-dump
  */
 public class DeadLocksTests {
-
-    @Timeout(5)
     @Test
     public void nestedLocksDeadLock() throws InterruptedException {
         // Collect thread dump
+        // jstack <pid> | less
         DeadlockExample deadlockExample = new DeadlockExample();
 
         deadlockExample.synchronizedDeadLock();

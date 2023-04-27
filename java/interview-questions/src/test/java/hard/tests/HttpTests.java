@@ -83,6 +83,10 @@ public class HttpTests {
     /**
      * https://www.baeldung.com/spring-resttemplate-logging
      * https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.http-clients
+     * https://medium.com/@TimvanBaarsen/spring-boot-why-you-should-always-use-the-resttemplatebuilder-to-create-a-resttemplate-instance-d5a44ebad9e9
+     * https://www.youtube.com/watch?v=cOncBTpFQW8
+     * https://stackoverflow.com/questions/54066803/unable-to-see-resttemplate-metrics-using-micrometer
+     * https://stackoverflow.com/questions/74937191/spring-boot-3-micrometer-integration-with-resttemplate
      */
     @Test
     public void monitorHttpClient() {
