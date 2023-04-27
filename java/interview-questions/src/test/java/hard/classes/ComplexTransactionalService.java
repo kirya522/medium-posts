@@ -17,6 +17,7 @@ public class ComplexTransactionalService {
     }
 
     @Async
+    @Transactional
     public void asyncMethod() throws InterruptedException {
         transactionalService.asyncTransactional();
         transactionalService.longTransaction();

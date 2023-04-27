@@ -55,6 +55,7 @@ public class IOTests {
 
     /**
      * https://jenkov.com/tutorials/java-nio/index.html
+     * https://russianblogs.com/article/9386822493/
      */
     @Test
     public void nioWriteAndRead() throws IOException {
