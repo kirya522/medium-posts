@@ -32,6 +32,10 @@ public class ProxyTests {
         assert beanB != null;
     }
 
+    /**
+     * https://akshayhavale.medium.com/use-of-async-asynchronous-method-transactional-transaction-processing-499f6d7889a8
+     * https://stackoverflow.com/questions/71322509/async-and-transactional
+     */
     @Test
     public void wrappersCombinationTests() throws InterruptedException {
         complexTransactionalService.executeInTransactionMakeAsyncUnderHood();
