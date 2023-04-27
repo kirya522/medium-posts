@@ -1,5 +1,6 @@
 package medium.services;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +24,12 @@ public class TestTransactionalService {
      * https://www.baeldung.com/spring-programmatic-transaction-management
      */
     @Transactional
-    public void createInTransaction(){
+    public void createInTransaction() {
         int a = 1;
         int b = 2;
         privateTransaction();
-        System.out.println(a+b);
-        transactionTemplate.execute(new TransactionCallbackWithoutResult(){
+        System.out.println(a + b);
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 privateTransaction();
@@ -37,10 +38,10 @@ public class TestTransactionalService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void privateTransaction(){
+    private void privateTransaction() {
         int c = 1;
         int d = 3;
-        System.out.println(c+d);
+        System.out.println(c + d);
     }
 
     /**
@@ -52,6 +53,24 @@ public class TestTransactionalService {
         int c = 1;
         int d = 3;
         Thread.sleep(10000);
-        System.out.println(c+d);
+        System.out.println(c + d);
+    }
+
+    @Async
+    @Transactional
+    public void asyncTransactional() {
+        int a = 1;
+        int b = 2;
+        privateTransaction();
+        System.out.println(a + b);
+    }
+
+    @Transactional
+    @Async
+    public void transactionalAsync() {
+        int a = 1;
+        int b = 2;
+        privateTransaction();
+        System.out.println(a + b);
     }
 }
