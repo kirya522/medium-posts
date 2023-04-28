@@ -22,11 +22,26 @@ public class DeadLocksTests {
         deadlockExample.synchronizedDeadLock();
     }
 
+    /**
+     * https://itsobes.ru/JavaSobes/kak-poluchit-garantirovannyi-dedlok/
+     */
     @Test
     public void cyclicBarrier() throws InterruptedException {
         DeadlockExample deadlockExample = new DeadlockExample();
 
         deadlockExample.cyclicBarrierDeadLock();
+    }
+
+    @Test
+    public void noNotificationDeadLock() throws InterruptedException {
+        DeadlockExample deadlockExample = new DeadlockExample();
+
+        deadlockExample.noNotificationDeadLock();
+    }
+
+    @Test
+    public void simplestDeadLock() throws InterruptedException {
+        DeadlockExample.simplestDeadlock();
     }
 
     @Test
