@@ -123,11 +123,11 @@ public class DeadlockExample {
 
     public synchronized static void simplestDeadlock() {
         System.out.println("Deadlock started");
-        try {
             Thread t = new Thread(DeadlockExample::simplestDeadlock);
             t.start();
+        try {
             t.join();
-        } catch (Exception ex) {}
+        } catch (InterruptedException ignored) {}
         System.out.println("Deadlock released");
     }
 }
