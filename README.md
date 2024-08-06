@@ -10,6 +10,11 @@
 ### [WIP] Application with integration of different systems | [source](java/integrations/) | [slides](java/integrations/materials/)
 
 ---
+## General :cd:
+### All about caching: vol.1 read | [source](general/cache/) | [slides](general/cache/materials/)
+
+---
+
 ## Docker :whale:
 ### Docker intro materials - docker compose and dockerfile | [source](docker/docker-intro/)
 
@@ -18,11 +23,9 @@
 ## Kubernetes :octopus:
 ### Run application in local k8s minikube | [source](k8s/minikube-demo/)
 
-
 ---
 ## Tests :question:
 ### Major changes in code with shadow traffic | [source](tests/shadow-traffic/)
-
 
 ---
 
