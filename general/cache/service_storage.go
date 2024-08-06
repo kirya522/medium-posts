@@ -5,6 +5,10 @@ type DataBaseStorageWithCache struct {
 	c  Storage
 }
 
+func NewDataBaseStorageWithCache(db Storage, c Storage) *DataBaseStorageWithCache {
+	return &DataBaseStorageWithCache{db: db, c: c}
+}
+
 func (dbc *DataBaseStorageWithCache) getData(id int) (*Data, error) {
 	data, _ := dbc.c.getData(id)
 	if data != nil {

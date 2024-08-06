@@ -6,7 +6,7 @@ type SizedCachedStorage struct {
 	gc gcache.Cache
 }
 
-func NewCachedStorage(size int) *SizedCachedStorage {
+func NewSizedCachedStorage(size int) *SizedCachedStorage {
 	return &SizedCachedStorage{
 		gc: gcache.New(size).
 			LFU().
