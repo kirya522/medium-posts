@@ -34,7 +34,7 @@ SELECT
         ), 
         4326  -- Устанавливаем SRID (система координат WGS 84)
     )
-FROM generate_series(1, 10000) AS g(i)
+FROM generate_series(1, 10001) AS g(i)
 
 -- Генерация заказов
 INSERT INTO orders (customer_id, order_date, amount, status)
@@ -60,14 +60,19 @@ CREATE INDEX idx_customer_customer_id ON customers(customer_id);
 EXPLAIN SELECT * FROM orders
 WHERE customer_id = 7565;
 
-EXPLAIN ANALYZE SELECT * FROM customers
+EXPLAIN ANALYZE SELECT * FROM orders
 WHERE customer_id = 7565;
 
 CREATE INDEX idx_customer_id ON orders(customer_id);
 
 
 -- 3. Сколько заказов по дням
-SELECT COUNT(*), order_date 
+EXPLAIN SELECT COUNT(*), order_date 
+FROM orders 
+WHERE order_date > '2024-01-01'
+GROUP BY order_date;
+
+EXPLAIN ANALYZE SELECT COUNT(*), order_date 
 FROM orders 
 WHERE order_date > '2024-01-01'
 GROUP BY order_date;
@@ -76,7 +81,11 @@ CREATE INDEX idx_order_date ON orders(order_date);
 
 
 -- 4. Поиск клиента по имени или фамилии
-SELECT *
+EXPLAIN SELECT *
+FROM customers 
+WHERE first_name like '%Custo%';
+
+EXPLAIN ANALYZE SELECT *
 FROM customers 
 WHERE first_name like '%Custo%';
 
@@ -131,6 +140,10 @@ WHERE o.order_date > '2024-01-01';
 
 
 -- 8. Брать только нужные данные
-SELECT first_name, last_name 
+EXPLAIN ANALYZE SELECT *
+FROM customers
+WHERE email = 'customer_7565@example.com';
+
+EXPLAIN SELECT first_name, last_name 
 FROM customers
 WHERE email = 'customer_7565@example.com';
