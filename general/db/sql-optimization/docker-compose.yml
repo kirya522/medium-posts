@@ -5,7 +5,7 @@ volumes:
 services:
 
   db:
-    image: kartoza/postgis:${POSTGRES_MAJOR_VERSION}-${POSTGIS_MAJOR_VERSION}.${POSTGIS_MINOR_RELEASE}
+    image: kartoza/postgis:17-3.5
     volumes:
       - postgis-data:/var/lib/postgresql
     environment:
@@ -21,4 +21,4 @@ services:
       - "5432:5432"
     restart: on-failure
     healthcheck:
-      test: "PGPASSWORD=docker pg_isready -h 127.0.0.1 -U docker -d gis"
+      test: "PGPASSWORD=postgres pg_isready -h 127.0.0.1 -U docker -d gis"
