@@ -80,7 +80,10 @@ EXPLAIN ANALYZE SELECT * FROM customers
 WHERE email = 'customer_7565@example.com';
 
 CREATE INDEX idx_hash_email ON customers USING HASH (email);
--- TODO когда не подойдет
+
+--TODO проверить результат
+EXPLAIN SELECT * FROM customers
+WHERE email > 'customer_75';
 
 
 -- 7. Есть индексы на соединяемых таблицах
