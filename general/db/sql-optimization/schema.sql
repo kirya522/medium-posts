@@ -32,4 +32,3 @@ SELECT
     (RANDOM() * 500)::NUMERIC(10, 2),
     CASE WHEN RANDOM() > 0.5 THEN 'completed' ELSE 'pending' END
 FROM generate_series(1, 40_000_000);
-
