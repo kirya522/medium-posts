@@ -37,11 +37,11 @@ CREATE INDEX idx_customers_hash_email ON customers USING HASH (email);
 EXPLAIN SELECT * FROM customers
 WHERE email > 'customer_75';
 
-drop index idx_customers_hash_email;
+DROP INDEX idx_customers_hash_email;
 
 CREATE INDEX idx_customers_email ON customers(email);
 
-explain ANALYZE SELECT * FROM customers
+EXPLAIN ANALYZE SELECT * FROM customers
 WHERE email > 'customer_75';
 
 
@@ -82,6 +82,6 @@ EXPLAIN ANALYZE SELECT *
 FROM customers
 WHERE email like 'customer_7565%@example.com';
 
-explain ANALYZE SELECT first_name 
+EXPLAIN ANALYZE SELECT first_name
 FROM customers
 WHERE email like 'customer_7565%@example.com';
