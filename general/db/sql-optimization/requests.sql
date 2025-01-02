@@ -49,17 +49,17 @@ WHERE email > 'customer_75';
 -- Поиск клиента по имени или фамилии
 EXPLAIN SELECT *
 FROM customers 
-WHERE first_name like 'Custo1%';
+WHERE first_name like 'Customer_1%';
 
 EXPLAIN ANALYZE SELECT *
 FROM customers 
-WHERE first_name like 'Custo1%';
+WHERE first_name like 'Customer_1%';
 
 CREATE INDEX idx_customers_first_name ON customers(first_name);
 
 EXPLAIN ANALYZE SELECT *
 FROM customers 
-WHERE first_name like 'Custo1%';
+WHERE first_name like 'Customer_1%';
 
 CREATE EXTENSION pg_trgm;
 CREATE INDEX idx_customers_full_text_name ON customers  USING gin (first_name gin_trgm_ops);
@@ -69,19 +69,21 @@ CREATE INDEX idx_customers_full_text_name ON customers  USING gin (first_name gi
 EXPLAIN SELECT o.order_id, c.first_name 
 FROM orders o
 JOIN customers c ON o.customer_id = c.customer_id
-WHERE o.order_date > '2024-12-01';
+WHERE o.order_date = '2024-12-01';
 
 EXPLAIN ANALYZE SELECT o.order_id, c.first_name 
 FROM orders o
 JOIN customers c ON o.customer_id = c.customer_id
-WHERE o.order_date > '2024-12-30';
+WHERE o.order_date = '2024-12-29';
+
+CREATE INDEX idx_orders_order_date ON orders(order_date);
 
 
 -- 3. Брать только нужные данные
 EXPLAIN ANALYZE SELECT *
-FROM customers
-WHERE email like 'customer_7565%@example.com';
+FROM orders o
+where o.order_date > '2024-12-01';
 
-EXPLAIN ANALYZE SELECT first_name
-FROM customers
-WHERE email like 'customer_7565%@example.com';
+EXPLAIN ANALYZE SELECT order_id
+FROM orders o
+where o.order_date > '2024-12-02';;
