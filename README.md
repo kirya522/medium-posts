@@ -14,7 +14,7 @@
 ### All about caching: vol.1 read | [source](general/cache/) | [slides](general/cache/materials/)
 ### Optimizing backend in 3 steps | [slides](general/performance/materials/)
 ### Optimizing SQL | [source](general/db/sql-optimization/) | [slides](general/db/sql-optimization/sql-optimization.pdf)
-
+### Non-flapping alert rules | [slides](general/alering/alerting.pdf)
 
 ---
 
