@@ -29,6 +29,7 @@
 ---
 ## Tests :question:
 ### Major changes in code with shadow traffic | [source](tests/shadow-traffic/)
+### Load-testing workshop | [slides](tests/load-testing/presentation.pdf)
 
 ---
 
