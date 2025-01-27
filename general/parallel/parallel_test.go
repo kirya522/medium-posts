@@ -58,6 +58,8 @@ func TestDeadlock(t *testing.T) {
 		mu1.Lock()
 		defer mu1.Unlock()
 
+		time.Sleep(1 * time.Second)
+
 		mu2.Lock()
 		defer mu2.Unlock()
 
@@ -68,6 +70,8 @@ func TestDeadlock(t *testing.T) {
 		defer wg.Done()
 		mu2.Lock()
 		defer mu2.Unlock()
+
+		time.Sleep(1 * time.Second)
 
 		mu1.Lock()
 		defer mu1.Unlock()
@@ -80,28 +84,39 @@ func TestDeadlock(t *testing.T) {
 }
 
 func TestDeadlockSolution(t *testing.T) {
-	var mu sync.Mutex
+	var mu1, mu2 sync.Mutex
 	var wg sync.WaitGroup
 
 	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
-		mu.Lock()
-		defer mu.Unlock()
+		mu1.Lock()
+		defer mu1.Unlock()
+
+		time.Sleep(1 * time.Second)
+
+		mu2.Lock()
+		defer mu2.Unlock()
 
 		t.Log("Goroutine 1 finished")
 	}()
 
 	go func() {
 		defer wg.Done()
-		mu.Lock()
-		defer mu.Unlock()
+		mu1.Lock()
+		defer mu1.Unlock()
+
+		time.Sleep(1 * time.Second)
+
+		mu2.Lock()
+		defer mu2.Unlock()
 
 		t.Log("Goroutine 2 finished")
 	}()
 
 	wg.Wait()
+	// Этот тест застрянет из-за deadlock
 }
 
 // Голодание потоков
