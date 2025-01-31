@@ -1,6 +1,7 @@
 package parallel
 
 import (
+	"fmt"
 	"sync"
 	"testing"
 	"time"
@@ -96,4 +97,66 @@ func TestDeadlockFix(t *testing.T) {
 	}()
 
 	wg.Wait()
+}
+
+func TestStarvation(t *testing.T) {
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+	wg.Add(1)
+
+	// "Жадная" горутина
+	go func() {
+		fmt.Println("Long operation started")
+		defer wg.Done()
+		mu.Lock()
+		defer mu.Unlock()
+		time.Sleep(3 * time.Second)
+		fmt.Println("Long operation finished")
+	}()
+
+	time.Sleep(10 * time.Millisecond)
+
+	// Голодные горутины
+	for i := 0; i < 5; i++ {
+		go func(id int) {
+			fmt.Printf("Goroutine %d started\n", id)
+			mu.Lock()
+			defer mu.Unlock()
+			fmt.Printf("Goroutine %d executed\n", id)
+		}(i)
+	}
+
+	wg.Wait()
+}
+
+func TestLiveLock(t *testing.T) {
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		for {
+			if mu.TryLock() {
+				fmt.Println("Goroutine 1 acquired lock")
+				mu.Unlock()
+			}
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		for {
+			if mu.TryLock() {
+				fmt.Println("Goroutine 2 acquired lock")
+				mu.Unlock()
+			}
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
+
+	wg.Wait()
+	fmt.Println("Program finished")
 }
