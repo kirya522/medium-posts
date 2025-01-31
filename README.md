@@ -15,6 +15,7 @@
 ### Optimizing backend in 3 steps | [slides](general/performance/materials/)
 ### Optimizing SQL | [source](general/db/sql-optimization/) | [slides](general/db/sql-optimization/sql-optimization.pdf)
 ### Non-flapping alert rules | [slides](general/alerting/alerting.pdf)
+### Issues of parallel programming | [source](general/parallel/)
 
 ---
 
