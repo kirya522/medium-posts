@@ -136,13 +136,13 @@ func TestLiveLock(t *testing.T) {
 	wg.Add(2)
 
 	go func() {
-		defer wg.Done()
 		for {
 			if mu.TryLock() {
 				fmt.Println("Goroutine 1 acquired lock")
 				mu.Unlock()
+				wg.Done()
 			}
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(1000 * time.Millisecond)
 		}
 	}()
 
@@ -152,8 +152,9 @@ func TestLiveLock(t *testing.T) {
 			if mu.TryLock() {
 				fmt.Println("Goroutine 2 acquired lock")
 				mu.Unlock()
+				wg.Done()
 			}
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(1000 * time.Millisecond)
 		}
 	}()
 
