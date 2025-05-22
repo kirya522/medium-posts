@@ -1,6 +1,9 @@
 package parallel
 
-import "sync"
+import (
+	"sync"
+	"sync/atomic"
+)
 
 func parallelCount() int {
 	var counter int
@@ -35,4 +38,20 @@ func parallelCountFix() int {
 
 	wg.Wait()
 	return counter
+}
+
+func parallelCountAtomicFix() int {
+	var counter atomic.Int64
+	var wg sync.WaitGroup
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter.Add(1)
+		}()
+	}
+
+	wg.Wait()
+	return int(counter.Load())
 }
