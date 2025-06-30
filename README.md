@@ -18,6 +18,7 @@
 ### Issues of parallel programming | [source](general/parallel/)
 
 ---
+# Auther- Satyendra Dwivedi
 
 ## Docker :whale:
 ### Docker intro materials - docker compose and dockerfile | [source](docker/docker-intro/)
