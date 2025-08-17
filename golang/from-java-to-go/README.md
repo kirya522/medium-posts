@@ -19,6 +19,10 @@
 ## Useful commands
 
 ```shell
+go run cmd/app/main.go
+```
+
+```shell
 go get github.com/golang/mock/gomock
 ```
 
