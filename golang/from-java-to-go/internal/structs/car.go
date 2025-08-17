@@ -1,4 +1,4 @@
-//go:generate mockgen -package ${GOPACKAGE} -source $GOFILE -destination mock.go
+//go:generate mockgen -package mocks -source $GOFILE -destination ./mocks/mock.go
 
 package structs
 

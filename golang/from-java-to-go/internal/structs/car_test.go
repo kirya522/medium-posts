@@ -1,6 +1,8 @@
-package structs
+package structs_test
 
 import (
+	"from-java-to-go/internal/structs"
+	"from-java-to-go/internal/structs/mocks"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -18,7 +20,7 @@ func TestEngine_String(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		engine := Engine{Power: tt.power}
+		engine := structs.Engine{Power: tt.power}
 		got := engine.String()
 		if got != tt.want {
 			t.Errorf("Engine{Power: %d}.String() = %q, want %q", tt.power, got, tt.want)
@@ -30,7 +32,7 @@ func TestEngine_Mock(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockStarter := NewMockStarter(ctrl)
+	mockStarter := mocks.NewMockStarter(ctrl)
 
 	// Устанавливаем ожидание на метод Start
 	mockStarter.EXPECT().Start().Times(1)
