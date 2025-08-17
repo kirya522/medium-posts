@@ -5,7 +5,7 @@ import (
 	"from-java-to-go/internal/structs/mocks"
 	"testing"
 
-	"github.com/golang/mock/gomock"
+	"go.uber.org/mock/gomock"
 )
 
 func TestEngine_String(t *testing.T) {
