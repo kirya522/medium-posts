@@ -17,7 +17,7 @@ func main() {
 		"postgres://user:pass@localhost:5433/shard1?sslmode=disable",
 		"postgres://user:pass@localhost:5434/shard2?sslmode=disable",
 		"postgres://user:pass@localhost:5435/shard3?sslmode=disable",
-		"postgres://user:pass@localhost:5436/shard4?sslmode=disable",
+		//"postgres://user:pass@localhost:5436/shard4?sslmode=disable",
 	}
 	cluster := internal.NewCluster(conns)
 
