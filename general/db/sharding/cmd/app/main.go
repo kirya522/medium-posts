@@ -17,7 +17,7 @@ func main() {
 		"postgres://user:pass@localhost:5433/shard1?sslmode=disable",
 		"postgres://user:pass@localhost:5434/shard2?sslmode=disable",
 		"postgres://user:pass@localhost:5435/shard3?sslmode=disable",
-		// "postgres://user:pass@localhost:5436/shard4?sslmode=disable",
+		"postgres://user:pass@localhost:5436/shard4?sslmode=disable",
 	}
 	cluster := internal.NewCluster(conns)
 
@@ -80,28 +80,33 @@ func demoOrder(cluster *internal.Cluster) {
 func demoRequests(cluster *internal.Cluster) {
 	// users of shard
 	fmt.Print("\nGet all users\n")
-	fmt.Print("----\n")
 	users := cluster.GetAllUsers()
+	fmt.Printf("Total users: %d\n", len(users))
+	fmt.Print("----\n")
 
 	// get single user
 	fmt.Print("\nGet single user\n")
 	fmt.Print("----\n")
 	user := cluster.GetUser(users[mathrand.Intn(len(users))].UserID)
-	fmt.Printf("UserID: %d, Name: %s\n", user.UserID, user.Name)
+	if user.UserID != 0 {
+		fmt.Printf("UserID: %d, Name: %s\n", user.UserID, user.Name)
+	} else {
+		fmt.Printf("User not found\n")
+	}
 
 	// get orders of popular user
-	fmt.Print("\nGet orders of popular user\n")
+	fmt.Print("\nGet orders of user\n")
 	fmt.Print("----\n")
 	orders := cluster.GetOrdersByUser(users[0].UserID)
 	fmt.Printf("UserID: %d has %d orders\n", users[0].UserID, len(orders))
 
 	// get order by orderID
 	if len(orders) == 0 {
-		fmt.Printf("No orders found for user %d\n", users[0].UserID)
-		return
+		fmt.Printf("No orders found for user, cant request by OrderID %d\n", users[0].UserID)
+	} else {
+		fmt.Print("\nGet order by OrderID\n")
+		fmt.Print("----\n")
+		order := cluster.GetOrder(orders[mathrand.Intn(len(orders))].OrderID)
+		fmt.Printf("OrderID: %d, Details: %s, UserID: %d\n", order.OrderID, order.Details, order.UserID)
 	}
-	fmt.Print("\nGet order by OrderID\n")
-	fmt.Print("----\n")
-	order := cluster.GetOrder(orders[mathrand.Intn(len(orders))].OrderID)
-	fmt.Printf("OrderID: %d, Details: %s, UserID: %d\n", order.OrderID, order.Details, order.UserID)
 }
