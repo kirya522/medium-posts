@@ -78,7 +78,7 @@ func main() {
 	cluster.InsertUser("Charlie")
 	cluster.InsertUser("Dave")
 
-	for i := range cluster.Shards {
-		cluster.GetUsers(i)
+	for shardId := range cluster.Shards {
+		cluster.GetUsers(shardId)
 	}
 }

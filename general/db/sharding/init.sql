@@ -1,4 +1,11 @@
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     name TEXT
 );
+
+
+CREATE TABLE IF NOT EXISTS orders (
+    order_id SERIAL PRIMARY KEY,
+    details TEXT,
+    user_id integer REFERENCES users(user_id)
+)
