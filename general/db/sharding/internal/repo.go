@@ -21,6 +21,46 @@ type Cluster struct {
 	Node   *snowflake.Node
 }
 
+func (c *Cluster) GetOrder(orderID int) Order {
+	for _, shard := range c.Shards {
+		var order Order
+		err := shard.DB.First(&order, "order_id = ?", orderID).Error
+		if err != nil {
+			continue
+		}
+
+		return order
+	}
+	return Order{}
+}
+
+func (c *Cluster) GetAllUsers() []User {
+	var users []User
+	for _, shard := range c.Shards {
+		var shardUsers []User
+		err := shard.DB.Find(&shardUsers).Error
+		if err != nil {
+			log.Printf("query error shard %d: %v", shard.ID, err)
+			continue
+		}
+		users = append(users, shardUsers...)
+	}
+	return users
+}
+
+func (c *Cluster) GetOrdersByUser(userID int) []Order {
+	shard := c.getShard(strconv.Itoa(userID))
+
+	var orders []Order
+	err := shard.DB.Find(&orders, "user_id = ?", userID).Error
+	if err != nil {
+		log.Printf("query error shard %d: %v", shard.ID, err)
+		return []Order{}
+	}
+
+	return orders
+}
+
 func NewCluster(conns []string) *Cluster {
 	shards := make([]*Shard, len(conns))
 	for i, conn := range conns {
@@ -79,7 +119,7 @@ func (c *Cluster) CountUsers() int {
 func (c *Cluster) InsertUser(name string) {
 	id := c.Node.Generate().Int64()
 	shard := c.getShard(strconv.FormatInt(id, 10))
-	err := shard.DB.Create(&User{ID: int(id), Name: name}).Error
+	err := shard.DB.Create(&User{UserID: int(id), Name: name}).Error
 	if err != nil {
 		log.Printf("insert error shard %d: %v", shard.ID, err)
 	} else {
@@ -97,7 +137,19 @@ func (c *Cluster) InsertOrder(details string, user int) {
 	}
 }
 
-func (c *Cluster) GetUsers(shardID int, echo bool) []User {
+func (c *Cluster) GetUser(id int) User {
+	shard := c.getShard(strconv.Itoa(id))
+
+	var user User
+	err := shard.DB.First(&user, "user_id = ?", id).Error
+	if err != nil {
+		return User{}
+	}
+
+	return user
+}
+
+func (c *Cluster) GetUsersInShard(shardID int, echo bool) []User {
 	var users []User
 	err := c.Shards[shardID].DB.Find(&users).Error
 	if err != nil {
