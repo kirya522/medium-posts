@@ -129,7 +129,8 @@ func (c *Cluster) InsertUser(name string) {
 
 func (c *Cluster) InsertOrder(details string, user int) {
 	shard := c.getShard(strconv.Itoa(user))
-	err := shard.DB.Create(&Order{Details: details, UserID: user}).Error
+	id := c.Node.Generate().Int64()
+	err := shard.DB.Create(&Order{OrderID: int(id), Details: details, UserID: user}).Error
 	if err != nil {
 		log.Printf("insert error shard %d: %v", shard.ID, err)
 	} else {
