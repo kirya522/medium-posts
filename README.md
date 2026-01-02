@@ -7,7 +7,8 @@
 ### Unit tests explanation and example based on mockito | [source](java/unit-tests/)
 ### Spring boot application metrics collection | [source](java/spring-metrics/)
 ### Spring boot application docker image creation | [source](java/minimum-image/)
-### [WIP] Application with integration of different systems | [source](java/integrations/) | [slides](java/integrations/materials/)
+### Java Thread and Heap dumps on practice with real problems | [source](java/dump-example/)
+### Application with integration of different systems | [source](java/integrations/) | [slides](java/integrations/materials/)
 
 ---
 ## General :cd:
