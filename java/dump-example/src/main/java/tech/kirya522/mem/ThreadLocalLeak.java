@@ -8,8 +8,4 @@ public class ThreadLocalLeak {
     public static void leak() {
         TL.set(new byte[5 * 1024 * 1024]);
     }
-
-    public static void remove() {
-        TL.remove();
-    }
 }

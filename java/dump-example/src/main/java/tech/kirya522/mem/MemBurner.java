@@ -4,6 +4,8 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,18 +45,28 @@ public class MemBurner {
         }
     }
 
-    public void notLeak() {
-        ExecutorService pool = Executors.newFixedThreadPool(10);
+    public long streamLeak() {
+        List<Order> orders = getOrders(10_000);
 
-        for (int i = 0; i < 100; i++) {
-            pool.submit(()->{
-                try {
-                    ThreadLocalLeak.leak();
-                } finally {
-                    ThreadLocalLeak.remove();
-                }
-            });
+        var ordersDto = orders.stream()
+                .map(OrderDto::new)
+                .toList();
+
+        try {
+            Thread.sleep(30_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
+        return ordersDto.size();
+    }
+
+    private List<Order> getOrders(int count) {
+        List<Order> orders = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            orders.add(new Order(i));
+        }
+        return orders;
     }
 
     public void notBurn() {

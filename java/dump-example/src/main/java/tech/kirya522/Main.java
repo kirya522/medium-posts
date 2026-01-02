@@ -11,7 +11,7 @@ import java.util.List;
 public class Main {
     static void main() throws InterruptedException {
         // Режим работы для задачи
-        int mode = 4;
+        int mode = 5;
 
         List<Thread> threads = new ArrayList<>();
         switch (mode) {
@@ -65,7 +65,8 @@ public class Main {
                 thread6.start();
                 threads.add(thread6);
 
-                var thread7 = new Thread(() -> new MemBurner().notLeak(), "thread_local_not_leak");
+                // no_payload, paging, limit
+                var thread7 = new Thread(() -> new MemBurner().streamLeak(), "stream_leak");
                 thread7.start();
                 threads.add(thread7);
                 break;
