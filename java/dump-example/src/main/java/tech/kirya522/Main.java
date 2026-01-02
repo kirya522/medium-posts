@@ -11,7 +11,7 @@ import java.util.List;
 public class Main {
     static void main() throws InterruptedException {
         // Режим работы для задачи
-        int mode = 5;
+        int mode = 1;
 
         List<Thread> threads = new ArrayList<>();
         switch (mode) {
@@ -35,15 +35,16 @@ public class Main {
                 thread2.start();
                 break;
 
+            // blocking io
             case 3:
                 // jstack <pid>
-                // blocking io
                 // TIMED_WAITING
                 var thread3 = new Thread(() -> new PoolExhaustion().burn(), "pool");
                 threads.add(thread3);
                 thread3.start();
                 break;
 
+            // oom
             case 4:
                 // -XX:+HeapDumpOnOutOfMemoryError
                 // mat
@@ -59,6 +60,7 @@ public class Main {
                 threads.add(thread5);
                 break;
 
+            // prod leak
             case 5:
                 // https://dev.to/faangmaster/java-thread-local-memory-leaks-2d28
                 var thread6 = new Thread(() -> new MemBurner().leak(), "thread_local_leak");
@@ -71,6 +73,7 @@ public class Main {
                 threads.add(thread7);
                 break;
 
+            // deadlock
             case 6:
                 // BLOCKED
                 var thread8 = new Thread(() -> new DeadLock().deadlock(), "deadlock");
