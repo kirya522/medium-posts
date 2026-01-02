@@ -16,6 +16,7 @@ public class PoolExhaustion {
             handleRequest();
         }
         try {
+            // httpClient.send(request, BodyHandlers.ofString());
             Thread.sleep(100_000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

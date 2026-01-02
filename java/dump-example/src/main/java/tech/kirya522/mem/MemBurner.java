@@ -5,12 +5,15 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class MemBurner {
     private boolean burning = true;
-    private final ConcurrentHashMap<Long, Long> cache;
+    private final ConcurrentHashMap<Long, User> cache;
 
-    private final Cache<Long, Long> validCache;
+    private final Cache<Long, User> validCache;
 
 
     public MemBurner() {
@@ -24,22 +27,42 @@ public class MemBurner {
         for (int i = 0; burning; i++) {
             getValue(i);
 
-            // delay
             try {
-                Thread.sleep(50);
+                TimeUnit.NANOSECONDS.sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
+    public void leak() {
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 100; i++) {
+            pool.submit(ThreadLocalLeak::leak);
+        }
+    }
+
+    public void notLeak() {
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 100; i++) {
+            pool.submit(()->{
+                try {
+                    ThreadLocalLeak.leak();
+                } finally {
+                    ThreadLocalLeak.remove();
+                }
+            });
+        }
+    }
+
     public void notBurn() {
         for (int i = 0; burning; i++) {
-            validCache.get((long) i, k -> (long) Math.sqrt(System.nanoTime()));
+            validCache.get((long) i, k -> new User((long) Math.sqrt(System.nanoTime()), "username", 1999));
 
-            // delay
             try {
-                Thread.sleep(50);
+                TimeUnit.NANOSECONDS.sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -50,7 +73,7 @@ public class MemBurner {
         this.burning = burning;
     }
 
-    public Long getValue(long key) {
-        return cache.computeIfAbsent(key, k -> (long) Math.sqrt(System.nanoTime()));
+    public User getValue(long key) {
+        return cache.computeIfAbsent(key, k -> new User((long) Math.sqrt(System.nanoTime()), "username", 1999));
     }
 }
