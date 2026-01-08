@@ -1,5 +1,6 @@
 # Dumps example
 
+[general info](https://www.baeldung.com/java-heap-thread-core-dumps)
 
 ## Thread dumps
 - [baeldung](https://www.baeldung.com/java-thread-dump)
