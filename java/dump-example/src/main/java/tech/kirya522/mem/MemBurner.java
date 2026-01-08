@@ -28,12 +28,6 @@ public class MemBurner {
     public void burn() {
         for (int i = 0; burning; i++) {
             getValue(i);
-
-            try {
-                TimeUnit.NANOSECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

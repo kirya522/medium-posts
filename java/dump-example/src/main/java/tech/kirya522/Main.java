@@ -48,6 +48,7 @@ public class Main {
             case 4:
                 // -XX:+HeapDumpOnOutOfMemoryError
                 // mat
+                // -Xmx512m
                 // shallow - object itself
                 // retained - all the dependencies and tree
                 // real example - huge excel file -> server OOM
