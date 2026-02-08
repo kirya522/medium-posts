@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	dbURL    = "postgres://demo:demo@localhost/demo?sslmode=disable"
+	dbURL    = "postgres://demo:demo@localhost:5432/demo?sslmode=disable"
 	dataSize = 1_000_000
 	pageSize = 20
 )
@@ -89,50 +89,61 @@ func countOrders(db *sql.DB) int {
 }
 
 func generateOrders(db *sql.DB) {
-	tx := mustBegin(db)
-	defer tx.Rollback()
+	const workers = 20 // количество потоков
+	rowsPerWorker := dataSize / workers
 
-	stmt := mustPrepare(tx, `
-		INSERT INTO orders (user_id, created_at)
-		VALUES ($1, $2)
-	`)
-	defer stmt.Close()
+	log.Printf("Generating %d rows in %d workers...", dataSize, workers)
 
-	now := time.Now()
+	// Канал для сигнализации ошибок
+	errCh := make(chan error, workers)
 
-	for i := 0; i < dataSize; i++ {
-		_, err := stmt.Exec(
-			rand.Int63n(100_000),
-			now.Add(-time.Duration(rand.Intn(180*24))*time.Hour),
-		)
-		if err != nil {
+	for w := 0; w < workers; w++ {
+		start := w * rowsPerWorker
+		end := start + rowsPerWorker
+		if w == workers-1 {
+			end = dataSize // последний воркер может взять остаток
+		}
+
+		go func(start, end int) {
+			stmt, err := db.Prepare(`
+				INSERT INTO orders (user_id, created_at)
+				VALUES ($1, $2)
+			`)
+			if err != nil {
+				errCh <- err
+				return
+			}
+			defer stmt.Close()
+
+			now := time.Now()
+
+			for i := start; i < end; i++ {
+				if _, err := stmt.Exec(
+					rand.Int63n(100_000),
+					now.Add(-time.Duration(rand.Intn(180*24))*time.Hour),
+				); err != nil {
+					errCh <- err
+					return
+				}
+
+				// Логируем прогресс каждого воркера каждые 100_000 записей
+				if (i-start) > 0 && (i-start)%100_000 == 0 {
+					log.Printf("Worker %d inserted %d rows", w, i-start)
+				}
+			}
+
+			errCh <- nil
+		}(start, end)
+	}
+
+	// Ждем завершения всех воркеров
+	for i := 0; i < workers; i++ {
+		if err := <-errCh; err != nil {
 			log.Fatal(err)
 		}
-
-		if i > 0 && i%100_000 == 0 {
-			log.Printf("Inserted %d rows", i)
-		}
 	}
 
-	if err := tx.Commit(); err != nil {
-		log.Fatal(err)
-	}
-}
-
-func mustBegin(db *sql.DB) *sql.Tx {
-	tx, err := db.Begin()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return tx
-}
-
-func mustPrepare(tx *sql.Tx, q string) *sql.Stmt {
-	stmt, err := tx.Prepare(q)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return stmt
+	log.Println("Data generation finished (parallel)")
 }
 
 /*
