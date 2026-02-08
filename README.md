@@ -14,13 +14,20 @@
 ## General :cd:
 ### All about caching: vol.1 read | [source](general/cache/) | [slides](general/cache/materials/)
 ### Optimizing backend in 3 steps | [slides](general/performance/materials/)
-### Optimizing SQL | [source](general/db/sql-optimization/) | [slides](general/db/sql-optimization/sql-optimization.pdf)
-### Scaling SQL | [slides](general/db/sharding/sharding.pdf)
 ### Non-flapping alert rules | [slides](general/alerting/alerting.pdf)
 ### Issues of parallel programming | [source](general/parallel/)
 ### NFR on practice 99.99 avilability | [slides](general/nfr/nfr.pdf)
 
 ---
+
+## DB
+
+### Scaling SQL and Sharding | [source](eneral/db/sharding) | [slides](general/db/sharding/sharding.pdf)
+### Optimizing SQL | [source](general/db/sql-optimization/) | [slides](general/db/sql-optimization/sql-optimization.pdf)
+### Effective Pagination | [source](general/db/pagination/) | [slides](general/db/pagination/pagination.pdf)
+
+---
+
 
 ## Docker :whale:
 ### Docker intro materials - docker compose and dockerfile | [source](docker/docker-intro/)
