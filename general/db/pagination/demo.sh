@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# db setup
+docker compose up -d
+
+# Run app
+go run main.go
+
 # OFFSET
 curl "localhost:8080/offset?page=0"
 curl "localhost:8080/offset?page=1000"
