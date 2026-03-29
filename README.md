@@ -17,6 +17,7 @@
 ### Non-flapping alert rules | [slides](general/alerting/alerting.pdf)
 ### Issues of parallel programming | [source](general/parallel/)
 ### NFR on practice 99.99 avilability | [slides](general/nfr/nfr.pdf)
+### Idempotency | [slides](general/idempotency/idempotency.pdf)
 
 ---
 
